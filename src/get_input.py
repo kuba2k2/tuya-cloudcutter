@@ -77,9 +77,8 @@ def ask_profile_base(profiles):
     return profiles[name]
 
 
-def ask_custom_firmware():
-    firmware_dir = "/work/custom-firmware"
-    return f"{firmware_dir}/{ask_files('Select your custom firmware file', firmware_dir)}"
+def ask_custom_firmware(firmware_dir):
+    return f"{ask_files('Select your custom firmware file', firmware_dir)}"
 
 
 def validate_firmware_file(firmware):
@@ -116,6 +115,8 @@ if __name__ == "__main__":
         device_slug = ask_target_profile(sys.argv[3])
         print(f"{device_slug}", file=output_file)
     elif input_type == "firmware":
-        firmware = ask_custom_firmware()
-        firmware = validate_firmware_file(firmware)
+        firmware_dir = "/work/custom-firmware"
+        firmware = ask_custom_firmware(firmware_dir)
+        firmware_file_path = os.path.join(firmware_dir, firmware)
+        validate_firmware_file(firmware_file_path)
         print(f"{firmware}", file=output_file)
