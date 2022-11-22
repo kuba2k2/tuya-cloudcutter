@@ -110,7 +110,7 @@ class DetachHandler(TuyaServerHandler):
             response = endpoint_hook_response
         else:
             # Default process, read the response from the base schema directory and return None if it doesn't exist
-            endpoint_response_path = os.path.join(self.schema_directory, f"{endpoint}.json")
+            endpoint_response_path = os.path.join(self.schema_directory, self.config.get(DeviceConfig.CHIP_FAMILY), f"{endpoint}.json")
             if os.path.exists(endpoint_response_path):
                 with open(endpoint_response_path, "r") as responsefs:
                     response = json.load(responsefs)
